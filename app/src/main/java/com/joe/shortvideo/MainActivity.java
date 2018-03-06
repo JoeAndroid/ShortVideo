@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void player(View view) {
+        startActivity(new Intent(this,PlayVideoActivity.class));
+    }
+
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(),
                 WRITE_EXTERNAL_STORAGE);
@@ -88,4 +92,5 @@ public class MainActivity extends AppCompatActivity {
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+
 }
