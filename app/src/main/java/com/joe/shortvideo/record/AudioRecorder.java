@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.joe.shortvideo.util.FileUtils;
+import com.joe.shortvideo.util.PcmToWav;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +35,7 @@ public class AudioRecorder {
     //采用频率
     //44100是目前的标准，但是某些设备仍然支持22050，16000，11025
     //采样频率一般共分为22.05KHz、44.1KHz、48KHz三个等级
-    private final static int AUDIO_SAMPLE_RATE = 16000;
+    private final static int AUDIO_SAMPLE_RATE = 44100;
     //声道 单声道
     private final static int AUDIO_CHANNEL = AudioFormat.CHANNEL_IN_MONO;
     //编码
@@ -162,15 +163,15 @@ public class AudioRecorder {
     /**
      * 暂停录音
      */
-    public void pauseRecord(){
-        Log.d("AudioRecorder","===pauseRecord===");
-        if (status!=Status.STATUS_START){
+    public void pauseRecord() {
+        Log.d("AudioRecorder", "===pauseRecord===");
+        if (status != Status.STATUS_START) {
             throw new IllegalStateException("没在录音");
-        }else {
-            try{
+        } else {
+            try {
                 audioRecord.stop();
-                status=Status.STATUS_PAUSE;
-            }catch (Exception e){
+                status = Status.STATUS_PAUSE;
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -180,11 +181,11 @@ public class AudioRecorder {
     /**
      * 停止录音
      */
-    public void stopRecord(){
-        Log.d("AudioRecorder","===stopRecord===");
-        if (status==Status.STATUS_NO_READY||status==Status.STATUS_READY){
+    public void stopRecord() {
+        Log.d("AudioRecorder", "===stopRecord===");
+        if (status == Status.STATUS_NO_READY || status == Status.STATUS_READY) {
             throw new IllegalStateException("录音尚未开始");
-        }else {
+        } else {
             audioRecord.stop();
             status = Status.STATUS_STOP;
             release();
@@ -195,7 +196,17 @@ public class AudioRecorder {
      * 释放资源
      */
     private void release() {
-        Log.d("AudioRecorder","===release===");
+        Log.d("AudioRecorder", "===release===");
+        if (filesName.size() > 0) {
+            List<String> filePaths = new ArrayList<>();
+            for (String fileName : filesName) {
+                filePaths.add(FileUtils.getPcmFileAbsolutePath(fileName));
+            }
+            //清楚
+            filesName.clear();
+            //将多个 pcm文件转化为wav文件
+            mergePCMFilesToWAVFile(filePaths);
+        }
         if (audioRecord != null) {
             audioRecord.release();
             audioRecord = null;
@@ -217,6 +228,47 @@ public class AudioRecorder {
 
         status = Status.STATUS_NO_READY;
     }
+
+    /**
+     * 将pcm合并成wav
+     *
+     * @param filePaths
+     */
+    private void mergePCMFilesToWAVFile(final List<String> filePaths) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (PcmToWav.mergePCMFilesToWAVFile(filePaths, FileUtils.getWavFileAbsolutePath(fileName))) {
+                    //操作成功
+                } else {
+                    //操作失败
+                    Log.e("AudioRecorder", "mergePCMFilesToWAVFile fail");
+                    throw new IllegalStateException("mergePCMFilesToWAVFile fail");
+                }
+                fileName = null;
+            }
+        }).start();
+    }
+
+    /**
+     * 将单个pcm文件转化为wav文件
+     */
+    private void makePCMFileToWAVFile() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (PcmToWav.makePCMFileToWAVFile(FileUtils.getPcmFileAbsolutePath(fileName), FileUtils.getWavFileAbsolutePath(fileName), true)) {
+                    //操作成功
+                } else {
+                    //操作失败
+                    Log.e("AudioRecorder", "makePCMFileToWAVFile fail");
+                    throw new IllegalStateException("makePCMFileToWAVFile fail");
+                }
+                fileName = null;
+            }
+        }).start();
+    }
+
 
     /**
      * 获取录音对象的状态
