@@ -75,14 +75,14 @@ public class VideoPlayer {
         int inputBufferIndex = decoder.dequeueInputBuffer(TIMEOUT_US);
         if (inputBufferIndex > 0) {
             ByteBuffer inputBuffer = inputBuffers[inputBufferIndex];
-            int sampleSize = extractor.readSampleData(inputBuffer, 0);
+            int sampleSize = extractor.readSampleData(inputBuffer, 0);//把指定通道中的数据按偏移量读取到ByteBuffer中；
             if (sampleSize < 0) {
                 decoder.queueInputBuffer(inputBufferIndex, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM);
                 isMediaEOS = true;
                 Log.v(TAG, "media eos");
             } else {
                 decoder.queueInputBuffer(inputBufferIndex, 0, sampleSize, extractor.getSampleTime(), 0);
-                extractor.advance();
+                extractor.advance();//读取下一帧数据
             }
         }
         return isMediaEOS;
@@ -133,7 +133,7 @@ public class VideoPlayer {
                 MediaFormat mediaFormat = videoExtractor.getTrackFormat(videoTrackIndex);
                 int width = mediaFormat.getInteger(MediaFormat.KEY_WIDTH);
                 int height = mediaFormat.getInteger(MediaFormat.KEY_HEIGHT);
-                float time = mediaFormat.getFloat(MediaFormat.KEY_DURATION) / 1000000;
+                float time = mediaFormat.getLong(MediaFormat.KEY_DURATION) / 1000000;
                 callBack.videoAspect(width, height, time);
                 videoExtractor.selectTrack(videoTrackIndex);
                 try {

@@ -1,5 +1,6 @@
 package com.joe.shortvideo.util;
 
+import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 
@@ -125,5 +126,52 @@ public class FileUtils {
 
         }
         return list;
+    }
+
+    public static File getApplicationSdcardPath(Context context) {
+        File dir = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
+        if(dir == null) {
+            dir = context.getFilesDir();
+        }
+
+        return dir;
+    }
+
+    public static boolean deleteFD(String path) {
+        if(TextUtils.isEmpty(path)) {
+            return false;
+        } else {
+            File f = new File(path);
+            File to = new File(f.getAbsolutePath() + System.currentTimeMillis());
+            f.renameTo(to);
+            return deleteFD(to);
+        }
+    }
+
+    public static boolean deleteFD(File fd) {
+        return !fd.exists()?false:(fd.isDirectory()?deleteDirectory(fd):fd.delete());
+    }
+
+    public static boolean deleteDirectory(File dir) {
+        clearDirectory(dir);
+        return dir.delete();
+    }
+
+    public static void clearDirectory(File dir) {
+        File[] files = dir.listFiles();
+        if(files != null) {
+            File[] var2 = files;
+            int var3 = files.length;
+
+            for(int var4 = 0; var4 < var3; ++var4) {
+                File f = var2[var4];
+                if(f.isDirectory()) {
+                    deleteDirectory(f);
+                } else {
+                    f.delete();
+                }
+            }
+
+        }
     }
 }

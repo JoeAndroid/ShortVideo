@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.joe.shortvideo">
 
+    <!-- Tell the system this app requires OpenGL ES 2.0. -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <!-- 获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 假如我们要保存录音,还需要以下权限 -->
@@ -10,6 +15,11 @@
     <!-- SD卡权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -25,9 +35,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImageActivity" />
-        <activity android:name=".AudioRecordActivity" />
-        <activity android:name=".PlayVideoActivity"></activity>
+        <activity
+            android:name=".ImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AudioRecordActivity"
+            android:screenOrientation="portrait" />
+        <!--MediaCodec 解码播放视频-->
+        <activity
+            android:name=".PlayVideoActivity"
+            android:screenOrientation="portrait" />
+        <!--VideoView 播放本地视频-->
+        <activity
+            android:name=".PlayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoRecordActivity"
+            android:screenOrientation="portrait" />
+        <!--录制视频-->
+        <activity
+            android:name=".CameraRecorderActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity android:name=".FFmpegPlayerActivity" />
+        <activity android:name=".FFmpegToYUVActivity" />
+        <activity android:name=".opengl.OpenglDemo1Activity"></activity>
+        <activity android:name=".EditorActivity"></activity>
+        <activity android:name=".media.MediaActivity"></activity>
     </application>
 
 </manifest>
