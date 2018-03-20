@@ -12,13 +12,21 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.joe.shortvideo.Entity.FilterChoose;
 import com.joe.shortvideo.R;
 import com.joe.shortvideo.aavt.av.CameraRecorder2;
 import com.joe.shortvideo.aavt.gl.BeautyFilter;
+import com.joe.shortvideo.aavt.gl.ChooseFilter;
 import com.joe.shortvideo.aavt.gl.GroupFilter;
 import com.joe.shortvideo.aavt.gl.StickFigureFilter;
 import com.joe.shortvideo.aavt.gl.WaterMarkFilter;
+import com.joe.shortvideo.adapter.SelectorFilterAdapter;
+import com.joe.shortvideo.widget.WheelView.WheelView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CameraRecorderActivity extends Activity {
 
@@ -29,7 +37,8 @@ public class CameraRecorderActivity extends Activity {
 
     private CameraRecorder2 mCamera;
 
-    private GroupFilter mFilter;
+    private ChooseFilter mFilter;
+    private int filterIndex = 0;//当前选择滤镜
 
     private String tempPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.mp4";
 
@@ -40,7 +49,8 @@ public class CameraRecorderActivity extends Activity {
         mSurfaceView = findViewById(R.id.mSurfaceView);
         mTvRecord = findViewById(R.id.mTvRec);
         mTvPreview = findViewById(R.id.mTvShow);
-        mFilter = new GroupFilter(getResources());
+        initWheel();
+        mFilter = new ChooseFilter(getResources());
         mCamera = new CameraRecorder2();
         mCamera.setOutputPath(tempPath);
         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -48,8 +58,8 @@ public class CameraRecorderActivity extends Activity {
             public void surfaceCreated(SurfaceHolder holder) {
                 mCamera.setRenderer(mFilter);
 //                filter.addFilter(new StickFigureFilter(getResources()));
-                mFilter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
-                mFilter.addFilter(new WaterMarkFilter().setMarkPosition(30, 10, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
+//                mFilter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
+//                mFilter.addFilter(new WaterMarkFilter().setMarkPosition(30, 10, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
             }
 
             @Override
@@ -98,7 +108,7 @@ public class CameraRecorderActivity extends Activity {
                 }
                 break;
             case R.id.tvFilter:
-                mFilter.addFilter(new StickFigureFilter(getResources()));
+//                mFilter.addFilter(new StickFigureFilter(getResources()));
                 break;
             default:
                 break;
@@ -106,25 +116,39 @@ public class CameraRecorderActivity extends Activity {
     }
 
     /**
+     * 切换滤镜
+     */
+    private void changeFilter(int chooseIndex) {
+        if (chooseIndex != filterIndex) {
+            mFilter.setChangeType(chooseIndex);
+        }
+    }
+
+    /**
      * 设置滤镜选择控件
      */
-   /* private void initWheel() {
+    private void initWheel() {
         final List<FilterChoose> filterChooses = new ArrayList<>();
-        filterChooses.add(new FilterChoose(1, "默认"));
-        filterChooses.add(new FilterChoose(2, "寒冷"));
-        filterChooses.add(new FilterChoose(3, "温暖"));
-        filterChooses.add(new FilterChoose(4, "灰度"));
-        filterChooses.add(new FilterChoose(5, "浮雕"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.NORMAL, "默认"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.COOL, "寒冷"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.WARM, "温暖"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.GRAY, "灰度"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.CAMEO, "浮雕"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.INVERT, "底片"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.SEPIA, "旧照"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.TOON, "动画"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.CONVOLUTION, "卷积"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.SOBEL, "边缘"));
+        filterChooses.add(new FilterChoose(ChooseFilter.FilterType.SKETCH, "素描"));
         WheelView wheelView = (WheelView) findViewById(R.id.change_fliter);
-        wheelView.setAdapter(new WheelViewFilterAdapter(filterChooses));
+        wheelView.setAdapter(new SelectorFilterAdapter(filterChooses));
         wheelView.setOnItemSelectedListener(new WheelView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
                 changeFilter(filterChooses.get(index).getIndex());
                 filterIndex = filterChooses.get(index).getIndex();
-
             }
         });
-    }*/
+    }
 
 }

@@ -54,5 +54,20 @@
         android:layout_marginTop="10dp"
         android:textColor="@android:color/white"
         android:text="添加滤镜" />
-
+    <com.joe.shortvideo.widget.WheelView.WheelView
+        android:id="@+id/change_fliter"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/filterchoose_backgroud"
+        app:dividerColor="#00ffffff"
+        app:wheelDividerSize="0dp"
+        app:wheelItemCount="2"
+        app:wheelItemSize="45dp"
+        app:wheelOrientation="horizontal"
+        app:wheelTextColor="#ffffff"
+        app:wheelTextColorCenter="#8EE5EE"
+        app:wheelTextSize="14sp"/>
 </RelativeLayout>

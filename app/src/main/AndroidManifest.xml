@@ -60,7 +60,8 @@
         <activity android:name=".FFmpegPlayerActivity" />
         <activity android:name=".FFmpegToYUVActivity" />
         <activity android:name=".opengl.OpenglDemo1Activity"></activity>
-        <activity android:name=".ui.EditorActivity"></activity>
+        <activity android:name=".ui.EditorActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
         <activity android:name=".media.MediaActivity"></activity>
     </application>
 
