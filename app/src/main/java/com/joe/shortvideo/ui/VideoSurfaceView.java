@@ -1,4 +1,4 @@
-package com.joe.shortvideo;
+package com.joe.shortvideo.ui;
 
 /**
  * Created by baidu on 2017/2/10.

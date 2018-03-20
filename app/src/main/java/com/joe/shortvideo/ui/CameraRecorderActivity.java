@@ -1,4 +1,4 @@
-package com.joe.shortvideo;
+package com.joe.shortvideo.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.joe.shortvideo.R;
 import com.joe.shortvideo.aavt.av.CameraRecorder2;
 import com.joe.shortvideo.aavt.gl.BeautyFilter;
 import com.joe.shortvideo.aavt.gl.GroupFilter;

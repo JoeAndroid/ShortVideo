@@ -1,4 +1,4 @@
-package com.joe.shortvideo;
+package com.joe.shortvideo.ui;
 
 import android.graphics.SurfaceTexture;
 import android.opengl.GLES11Ext;

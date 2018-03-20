@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.joe.shortvideo.EditorActivity;
+import com.joe.shortvideo.ui.EditorActivity;
 import com.joe.shortvideo.R;
 
 public class MediaActivity extends AppCompatActivity implements View.OnClickListener, SelectedMediaAdapter.OnItemViewCallback {

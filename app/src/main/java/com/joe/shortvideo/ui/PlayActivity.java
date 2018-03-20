@@ -1,9 +1,11 @@
-package com.joe.shortvideo;
+package com.joe.shortvideo.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
+import com.joe.shortvideo.R;
 
 public class PlayActivity extends Activity {
 

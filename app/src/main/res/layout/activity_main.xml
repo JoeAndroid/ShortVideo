@@ -10,48 +10,54 @@
         android:id="@+id/sample_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:onClick="clickImage"
+        android:padding="10dp"
         android:text="通过三种方式绘制图片"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:padding="10dp"
         android:textColor="@android:color/black"
-        android:onClick="clickImage"/>
+        android:textSize="18sp"
+        android:visibility="gone" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:onClick="clickAudio"
+        android:padding="10dp"
         android:text="AudioRecord"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:padding="10dp"
         android:textColor="@android:color/black"
-        android:onClick="clickAudio"/>
+        android:textSize="18sp"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="VideoRecord"
-        android:textSize="18sp"
         android:gravity="center"
+        android:onClick="VideoRecord"
         android:padding="10dp"
+        android:text="短视频录制"
         android:textColor="@android:color/black"
-        android:onClick="VideoRecord"/>
+        android:textSize="18sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:onClick="player"
+        android:padding="10dp"
         android:text="player"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:padding="10dp"
         android:textColor="@android:color/black"
-        android:onClick="player"/>
+        android:textSize="18sp"
+        android:visibility="gone" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="opengl"
-        android:textSize="18sp"
         android:gravity="center"
+        android:onClick="opengl"
         android:padding="10dp"
+        android:text="opengl"
         android:textColor="@android:color/black"
-        android:onClick="opengl"/>
+        android:textSize="18sp"
+        android:visibility="gone" />
 </LinearLayout>

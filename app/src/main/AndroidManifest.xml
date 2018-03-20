@@ -28,7 +28,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,19 +48,19 @@
             android:screenOrientation="portrait" />
         <!--VideoView 播放本地视频-->
         <activity
-            android:name=".PlayActivity"
+            android:name=".ui.PlayActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".VideoRecordActivity"
             android:screenOrientation="portrait" />
         <!--录制视频-->
         <activity
-            android:name=".CameraRecorderActivity"
+            android:name=".ui.CameraRecorderActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity android:name=".FFmpegPlayerActivity" />
         <activity android:name=".FFmpegToYUVActivity" />
         <activity android:name=".opengl.OpenglDemo1Activity"></activity>
-        <activity android:name=".EditorActivity"></activity>
+        <activity android:name=".ui.EditorActivity"></activity>
         <activity android:name=".media.MediaActivity"></activity>
     </application>
 

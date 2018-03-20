@@ -2,7 +2,7 @@
  * Created by Wuwang on 2017/9/11
  * Copyright © 2017年 深圳哎吖科技. All rights reserved.
  */
-package com.joe.shortvideo;
+package com.joe.shortvideo.ui;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.joe.shortvideo.R;
 import com.seu.magicfilter.filter.advanced.GPUImageExtTexFilter;
 import com.seu.magicfilter.filter.base.GPUImageFilterGroup;
 import com.seu.magicfilter.filter.base.gpuimage.GPUImageFilter;
